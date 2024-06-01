@@ -1,5 +1,7 @@
 side_x = 28;
 side_y = 52;
+side_fillet_r = 4;
+thickness = 5;
 
 print_lh = 0.2;
 
@@ -15,4 +17,29 @@ module magnet_array(phi, height, spacing_x, spacing_y, count_x, count_y) {
     }
   }
 }
-magnet_array(6, 2, 10, 12, 2, 4);
+
+module card () {
+  // This works well and good, but has no nice fileting on the sides
+  // union(){
+  //   cube([side_x - 2*side_fillet_r, side_y, thickness], true);
+  //   cube([side_x, side_y - 2*side_fillet_r, thickness], true);
+  //   for (i = [-1:2:1]) {
+  //     for (j = [-1:2:1]) {
+  //       translate([i*(side_x/2 - side_fillet_r), j*(side_y/2 - side_fillet_r), 0]) 
+  //         cylinder(thickness, r=side_fillet_r, center=true);
+  //     }
+  //   }
+  // };
+  union(){
+    translate([-side_x/2 + side_fillet_r, 0, 0]) {
+      rotate([90, 0, 0]) 
+        cylinder(side_y - 2*side_fillet_r, r=side_fillet_r, center=true);
+      translate([0, -side_y/2 + side_fillet_r, 0])
+        sphere(r=side_fillet_r);
+      translate([0, side_y/2 - side_fillet_r, 0])
+        sphere(r=side_fillet_r);
+    }
+  };
+}
+
+card();
