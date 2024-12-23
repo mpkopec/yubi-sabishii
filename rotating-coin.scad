@@ -8,7 +8,7 @@ thickness = 3.6; // .1
 
 /* [Magnets] */
 // The diameter of a single magnet
-magnet_diameter = 6.0; // .1
+magnet_diameter = 6.1; // .1
 // The height of a single magnet
 magnet_height = 1.0; // .1
 // Total number of magnets in one side of the assembly
