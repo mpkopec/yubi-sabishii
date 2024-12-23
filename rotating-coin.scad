@@ -3,7 +3,7 @@
 which = "all"; // [bottom, top, all]
 // The diameter of the whole assembly
 diameter = 39.0; // .1
-// The thickness of the whole assembly
+// The thickness of one half of the assembly
 thickness = 3.6; // .1
 
 /* [Magnets] */
@@ -43,23 +43,20 @@ module magnet_array(external_diameter, magnet_diameter, magnet_height, magnet_co
 }
 
 module bottom_nomag(bottom_diameter, top_diameter, thickness) {
-  thickness_print = floor(thickness/print_lh);
-  b_thickness_print = ceil(thickness_print/2)*print_lh;
-  t_thickness_print = floor(thickness_print/2)*print_lh;
+  thickness_print = floor(thickness/print_lh)*print_lh;
 
   union(){
-    translate([0, 0, -b_thickness_print]) cylinder(b_thickness_print, d=bottom_diameter);
-    cylinder(t_thickness_print, d=top_diameter);
+    translate([0, 0, -thickness_print]) cylinder(thickness_print, d=bottom_diameter);
+    cylinder(thickness_print, d=top_diameter);
   };
 }
 
 module top_nomag(bottom_diameter, top_diameter, thickness) {
-  thickness_print = floor(thickness/print_lh);
-  t_thickness_print = floor(thickness_print/2)*print_lh;
+  thickness_print = floor(thickness/print_lh)*print_lh;
 
   difference(){
-    cylinder(t_thickness_print, d=bottom_diameter);
-    translate([0, 0, -mini_value]) cylinder(t_thickness_print + 2*mini_value, d=top_diameter + tol_xy*1.5);
+    cylinder(thickness_print, d=bottom_diameter);
+    translate([0, 0, -mini_value]) cylinder(thickness_print + 2*mini_value, d=top_diameter + tol_xy*1.5);
   };
 }
 
